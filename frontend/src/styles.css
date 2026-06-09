@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Taviraj:wght@400;500;600;700&family=Hind:wght@400;500;600&display=swap');
+
+:root {
+  --bg-sand: #f8efe2;
+  --bg-cream: #fff7eb;
+  --ink: #2f1f12;
+  --maroon: #7d2d1f;
+  --leaf: #2f6b52;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  font-family: 'Hind', 'Segoe UI', sans-serif;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(164, 90, 34, 0.1), transparent 30%),
+    radial-gradient(circle at 90% 20%, rgba(47, 107, 82, 0.08), transparent 30%),
+    linear-gradient(180deg, var(--bg-cream) 0%, var(--bg-sand) 100%);
+  color: var(--ink);
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Taviraj', Georgia, serif;
+  margin-top: 0;
+}
+
+p {
+  line-height: 1.45;
+}

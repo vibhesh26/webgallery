@@ -1,0 +1,78 @@
+<section>
+  <div class="hero">
+    <p class="kicker">Praush Paintings and Sketch</p>
+    <h1>Curated Indian Art Gallery</h1>
+    <p class="intro">Browse handpicked originals in two collections: Paintings and Sketches.</p>
+  </div>
+
+  <p *ngIf="loading">Loading paintings...</p>
+  <p class="error" *ngIf="error">{{ error }}</p>
+
+  <div *ngIf="!loading && !error" class="collections">
+    <div class="collection-toggle" role="tablist" aria-label="Artwork collections">
+      <button
+        type="button"
+        class="toggle-btn"
+        [class.active]="selectedCollection === 'sketches'"
+        (click)="selectCollection('sketches')">
+        Sketches
+      </button>
+      <button
+        type="button"
+        class="toggle-btn"
+        [class.active]="selectedCollection === 'paintings'"
+        (click)="selectCollection('paintings')">
+        Paintings
+      </button>
+    </div>
+
+    <section class="collection sketches-block" [class.mobile-hidden]="selectedCollection !== 'sketches'">
+      <div class="section-head">
+        <h2>Sketches</h2>
+        <span class="count">{{ sketchWorks.length }} works</span>
+      </div>
+
+      <div class="grid">
+        <article class="card sketch-card" *ngFor="let sketch of sketchWorks">
+          <img [src]="sketch.imageUrl" [alt]="sketch.title" (click)="openImagePreview(sketch)">
+          <div class="content">
+            <h3>{{ sketch.title }}</h3>
+            <p class="category">{{ sketch.category }}</p>
+            <p>{{ sketch.description }}</p>
+            <div class="meta">
+              <strong>{{ sketch.price | currency : 'INR' : 'symbol' : '1.0-0' }}</strong>
+            </div>
+            <button (click)="orderViaGmail(sketch)">Order on Gmail</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="portrait-cta">
+        <h3>Want to order a Self Portrait Sketch?</h3>
+        <p>Share your photo and preferred size to start a custom portrait order.</p>
+        <a class="portrait-btn" target="_blank" rel="noopener noreferrer" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=praveenkaran19%40gmail.com&amp;su=Self%20Portrait%20Sketch%20Order&amp;body=Hi%20Praush%2C%0A%0AI%20want%20to%20order%20a%20self%20portrait%20sketch.%0AName%3A%0APhone%3A%0ASize%20Preference%3A%0AReference%20Photo%20Link%3A%0A%0AThanks.">Order Self Portrait</a>
+      </div>
+    </section>
+
+    <section class="collection paintings-block" [class.mobile-hidden]="selectedCollection !== 'paintings'">
+      <div class="section-head">
+        <h2>Paintings</h2>
+        <span class="count">Coming Soon</span>
+      </div>
+
+      <div class="coming-soon-banner">
+        <h3>Paintings Collection Coming Soon...</h3>
+        <p>Fresh canvas works are being curated. Please check back shortly for the next launch.</p>
+      </div>
+    </section>
+  </div>
+
+  <div class="image-modal" *ngIf="selectedImage" (click)="closeImagePreview()">
+    <div class="image-dialog" (click)="$event.stopPropagation()">
+      <button type="button" class="close-btn" (click)="closeImagePreview()">Close</button>
+      <img [src]="selectedImage.imageUrl" [alt]="selectedImage.title">
+      <h3>{{ selectedImage.title }}</h3>
+      <p>Painting No: {{ selectedImage.id }}</p>
+    </div>
+  </div>
+</section>

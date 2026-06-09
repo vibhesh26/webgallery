@@ -1,0 +1,50 @@
+<section>
+  <h1>Checkout</h1>
+
+  <div class="layout">
+    <div class="panel" *ngIf="cartItems | async as items">
+      <h2>Cart</h2>
+      <p *ngIf="items.length === 0">Your cart is empty.</p>
+
+      <div class="line" *ngFor="let item of items">
+        <div>
+          <strong>{{ item.painting.title }}</strong>
+          <p>Qty: {{ item.quantity }}</p>
+        </div>
+        <div class="line-actions">
+          <span>{{ item.painting.price * item.quantity | currency : 'INR' : 'symbol' : '1.0-0' }}</span>
+          <button type="button" class="small" (click)="removeItem(item.painting.id)">Remove</button>
+        </div>
+      </div>
+
+      <h3>Total: {{ total | currency : 'INR' : 'symbol' : '1.0-0' }}</h3>
+    </div>
+
+    <form class="panel" [formGroup]="form" (ngSubmit)="placeOrder()">
+      <h2>Customer Details</h2>
+
+      <label>
+        Full Name
+        <input formControlName="customerName" type="text">
+      </label>
+
+      <label>
+        Email
+        <input formControlName="customerEmail" type="email">
+      </label>
+
+      <label>
+        Phone
+        <input formControlName="customerPhone" type="text">
+      </label>
+
+      <label>
+        Shipping Address
+        <textarea rows="4" formControlName="shippingAddress"></textarea>
+      </label>
+
+      <p class="error" *ngIf="error">{{ error }}</p>
+      <button type="submit">Send Order on Gmail</button>
+    </form>
+  </div>
+</section>
