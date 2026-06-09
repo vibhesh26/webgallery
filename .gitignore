@@ -1,0 +1,27 @@
+# OS and editor
+.DS_Store
+Thumbs.db
+
+# Workspace metadata
+.vscode/
+
+# Runtime and local data files
+data/
+backend/data/
+*.trace.db
+*.mv.db
+
+# Frontend build/runtime
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/coverage/
+
+# Backend build/runtime
+backend/target/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
