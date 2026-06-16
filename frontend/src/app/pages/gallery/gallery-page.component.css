@@ -14,6 +14,26 @@
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
+/* ── Collage scatter entrance ──────────────────────────────────── */
+@keyframes collageIn {
+  0% {
+    opacity: 0;
+    transform: rotate(var(--r, 0deg)) translate(var(--tx, 0px), var(--ty, 28px)) scale(0.83);
+    filter: blur(1.5px);
+  }
+  65% { filter: blur(0); }
+  100% {
+    opacity: 1;
+    transform: rotate(0deg) translate(0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* ── Page mood canvas ─────────────────────────────────────────────────── */
+.page-canvas {
+  /* no global filter — effects are scoped to individual cards */
+}
+
 /* ── Hero ──────────────────────────────────────────────────────── */
 .hero {
   padding: 1.2rem;
@@ -25,6 +45,11 @@
     linear-gradient(120deg, #fff5e3 0%, #f7ecd6 100%);
   border: 1px solid #ebd6b8;
   animation: fadeUp 0.55s ease both;
+  position: sticky;
+  top: 0.75rem;
+  z-index: 5;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 24px rgba(130, 57, 19, 0.10), 0 1.5px 0 #ebd6b8;
 }
 
 .hand-draw {
@@ -45,33 +70,15 @@
   80%       { transform: rotate(4deg); }
 }
 
-.kicker {
-  margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: #8a4a1d;
-  font-size: 0.78rem;
-  font-weight: 700;
+/* ── Sketch image – grayscale on hover (hovered card only) ──────── */
+.sketches-block .card:hover img {
+  filter: grayscale(1) contrast(1.12);
 }
 
-h1 {
-  margin: 0.35rem 0 0.3rem;
-  font-size: clamp(2rem, 3.2vw, 3.1rem);
-  letter-spacing: 0.03em;
-  color: #5f220b;
-  text-shadow: 0 2px 0 rgba(255, 236, 210, 0.9), 0 7px 22px rgba(130, 57, 19, 0.18);
+/* ── Painting image – colour bloom on hover (hovered card only) ─── */
+.paintings-block .card:hover img {
+  filter: saturate(1.55) brightness(1.07) contrast(1.05);
 }
-
-.intro {
-  color: #614127;
-  margin: 0;
-}
-
-.collections {
-  display: grid;
-  gap: 1.3rem;
-}
-
 .collection-toggle {
   display: none;
   align-items: center;
@@ -134,7 +141,7 @@ h1 {
   gap: 1rem;
 }
 
-/* Staggered card entrance */
+/* Staggered card collage entrance */
 .card {
   border: 1px solid #e3d2bc;
   border-radius: 16px;
@@ -142,16 +149,16 @@ h1 {
   background: #fffdf9;
   box-shadow: 0 8px 20px rgba(76, 44, 19, 0.08);
   transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
-  animation: fadeUp 0.5s ease both;
+  animation: collageIn 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
-.card:nth-child(1) { animation-delay: 0.05s; }
-.card:nth-child(2) { animation-delay: 0.12s; }
-.card:nth-child(3) { animation-delay: 0.19s; }
-.card:nth-child(4) { animation-delay: 0.26s; }
-.card:nth-child(5) { animation-delay: 0.33s; }
-.card:nth-child(6) { animation-delay: 0.40s; }
-.card:nth-child(n+7) { animation-delay: 0.47s; }
+.card:nth-child(1)  { --r: -5deg;  --tx: -30px; --ty: 25px;  animation-delay: 0.05s; }
+.card:nth-child(2)  { --r:  4deg;  --tx:  25px; --ty: 38px;  animation-delay: 0.15s; }
+.card:nth-child(3)  { --r: -3deg;  --tx: -16px; --ty: 30px;  animation-delay: 0.25s; }
+.card:nth-child(4)  { --r:  5deg;  --tx:  32px; --ty: 22px;  animation-delay: 0.35s; }
+.card:nth-child(5)  { --r: -4deg;  --tx: -22px; --ty: 35px;  animation-delay: 0.44s; }
+.card:nth-child(6)  { --r:  3deg;  --tx:  18px; --ty: 28px;  animation-delay: 0.52s; }
+.card:nth-child(n+7){ --r: -2deg;  --tx: -8px;  --ty: 32px;  animation-delay: 0.58s; }
 
 .card:hover {
   transform: translateY(-7px);
@@ -168,7 +175,7 @@ h1 {
   height: 220px;
   object-fit: cover;
   cursor: zoom-in;
-  transition: transform 0.38s ease;
+  transition: filter 0.55s ease, transform 0.38s ease;
 }
 
 .card:hover img {
