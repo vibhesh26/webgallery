@@ -1,3 +1,20 @@
+/* ── Entrance keyframes ───────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.88) translateY(18px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ── Hero ──────────────────────────────────────────────────────── */
 .hero {
   padding: 1.2rem;
   border-radius: 18px;
@@ -7,6 +24,25 @@
     radial-gradient(circle at 85% 70%, rgba(39, 112, 82, 0.2), transparent 35%),
     linear-gradient(120deg, #fff5e3 0%, #f7ecd6 100%);
   border: 1px solid #ebd6b8;
+  animation: fadeUp 0.55s ease both;
+}
+
+.hand-draw {
+  display: inline-block;
+  width: 1.9rem;
+  height: auto;
+  vertical-align: middle;
+  margin-left: 0.2em;
+  animation: fadeUp 0.7s ease both, wiggle 3s ease-in-out 1.2s infinite;
+  transform-origin: 27% 96%;   /* pivot at brush tip */
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  20%       { transform: rotate(-11deg); }
+  40%       { transform: rotate(9deg); }
+  60%       { transform: rotate(-6deg); }
+  80%       { transform: rotate(4deg); }
 }
 
 .kicker {
@@ -98,12 +134,29 @@ h1 {
   gap: 1rem;
 }
 
+/* Staggered card entrance */
 .card {
   border: 1px solid #e3d2bc;
   border-radius: 16px;
   overflow: hidden;
   background: #fffdf9;
   box-shadow: 0 8px 20px rgba(76, 44, 19, 0.08);
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+  animation: fadeUp 0.5s ease both;
+}
+
+.card:nth-child(1) { animation-delay: 0.05s; }
+.card:nth-child(2) { animation-delay: 0.12s; }
+.card:nth-child(3) { animation-delay: 0.19s; }
+.card:nth-child(4) { animation-delay: 0.26s; }
+.card:nth-child(5) { animation-delay: 0.33s; }
+.card:nth-child(6) { animation-delay: 0.40s; }
+.card:nth-child(n+7) { animation-delay: 0.47s; }
+
+.card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 18px 38px rgba(76, 44, 19, 0.16), 0 4px 10px rgba(76, 44, 19, 0.1);
+  border-color: #c8a47c;
 }
 
 .sketch-card {
@@ -115,6 +168,11 @@ h1 {
   height: 220px;
   object-fit: cover;
   cursor: zoom-in;
+  transition: transform 0.38s ease;
+}
+
+.card:hover img {
+  transform: scale(1.06);
 }
 
 .content {
@@ -142,12 +200,32 @@ button {
   padding: 0.6rem;
   border-radius: 10px;
   cursor: pointer;
-  transition: transform 0.2s ease, filter 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0);
+  transition: background 0.18s ease;
 }
 
 button:hover {
-  transform: translateY(-1px);
-  filter: brightness(1.04);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(139, 63, 29, 0.38);
+  filter: brightness(1.06);
+}
+
+button:hover::after {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 button:disabled {
@@ -157,6 +235,187 @@ button:disabled {
 
 .error {
   color: #a42424;
+}
+
+/* ── Collection toggle transition ─────────────────────────────── */
+.toggle-btn {
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #6f421f;
+  padding: 0.45rem 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.22s ease, color 0.22s ease, transform 0.18s ease;
+}
+
+.toggle-btn:hover:not(.active) {
+  background: rgba(143, 60, 30, 0.1);
+  transform: scale(1.04);
+}
+
+/* ── Portrait CTA ──────────────────────────────────────────────── */
+.portrait-cta {
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.portrait-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(76, 44, 19, 0.12);
+}
+
+.portrait-btn {
+  display: inline-block;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.portrait-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+}
+
+/* ── Image modal popup ─────────────────────────────────────────── */
+.image-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 10, 5, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.22s ease both;
+  padding: 1rem;
+}
+
+.image-dialog {
+  background: #fffdf9;
+  border-radius: 18px;
+  padding: 1.2rem;
+  max-width: 680px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 30px 70px rgba(20, 10, 5, 0.35);
+  animation: scaleIn 0.28s cubic-bezier(0.34, 1.36, 0.64, 1) both;
+  position: relative;
+}
+
+.image-dialog img {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: contain;
+  max-height: 55vh;
+}
+
+.image-dialog h3 {
+  margin: 0.7rem 0 0.2rem;
+  color: #4e2410;
+}
+
+.image-dialog p {
+  margin: 0;
+  color: #7a4e2d;
+  font-size: 0.9rem;
+}
+
+.close-btn {
+  position: absolute;
+  top: 0.8rem;
+  right: 0.8rem;
+  width: auto !important;
+  background: rgba(76, 44, 19, 0.12) !important;
+  color: #4e2410 !important;
+  padding: 0.3rem 0.75rem !important;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+}
+
+.close-btn:hover {
+  background: rgba(76, 44, 19, 0.22) !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ── Mobile hidden ─────────────────────────────────────────────── */
+@media (max-width: 700px) {
+  .mobile-hidden {
+    display: none;
+  }
+
+  .collection-toggle {
+    display: flex;
+  }
+}
+
+/* ── Enquiry modal extras ──────────────────────────────────────── */
+.enquiry-dialog {
+  max-width: 500px;
+}
+
+.enquiry-header {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.enquiry-thumb {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+  border: 1px solid #e3d2bc;
+}
+
+.enquiry-meta {
+  flex: 1;
+}
+
+.enquiry-meta h3 {
+  margin: 0.25rem 0 0.2rem;
+}
+
+.enquiry-label {
+  margin: 0;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #8a4a1d;
+  font-weight: 700;
+}
+
+.enquiry-note {
+  font-size: 0.88rem;
+  color: #7a4e2d;
+  background: #fff8ef;
+  border: 1px dashed #dfc49a;
+  border-radius: 10px;
+  padding: 0.7rem 0.85rem;
+  margin: 0 0 1rem;
+}
+
+.enquiry-send-btn {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  background: linear-gradient(90deg, #8b3f1d 0%, #a85a2b 100%);
+  color: #fff;
+  padding: 0.7rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.enquiry-send-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(139, 63, 29, 0.38);
+  filter: brightness(1.06);
 }
 
 .portrait-cta {

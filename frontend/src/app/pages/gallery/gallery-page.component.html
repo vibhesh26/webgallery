@@ -1,7 +1,32 @@
 <section>
   <div class="hero">
     <p class="kicker">Praush Paintings and Sketch</p>
-    <h1>Curated Indian Art Gallery</h1>
+    <h1>Curated Indian Art Gallery
+      <svg class="hand-draw" aria-hidden="true" viewBox="0 0 44 52" xmlns="http://www.w3.org/2000/svg">
+        <!-- brush handle -->
+        <line x1="32" y1="6" x2="16" y2="40" stroke="#7a5c3a" stroke-width="3.5" stroke-linecap="round"/>
+        <!-- end cap -->
+        <circle cx="32.5" cy="5.5" r="2.5" fill="#5a4030"/>
+        <!-- ferrule band -->
+        <path d="M13.5 37 L17.5 37 L19 41 L12 41 Z" fill="#9a8060"/>
+        <!-- bristles -->
+        <path d="M12 41 L9 51 L19 43 Z" fill="#c45e1a"/>
+        <!-- bristle tip -->
+        <circle cx="12" cy="50" r="1.2" fill="#944421"/>
+        <!-- palm -->
+        <path d="M21 20 C17 21 16 30 18 36 C20 40 26 40 29 37 C32 34 31 26 29 21 C27 17 24 18 21 20Z" fill="#d4956a"/>
+        <!-- thumb -->
+        <path d="M20 22 C17 19 15 15 17 12 C19 10 22 12 21 17 L20 21Z" fill="#c8845a"/>
+        <!-- index finger -->
+        <path d="M23 19 C22 14 23 10 25 9 C27 9 28 12 27 17 L25 20Z" fill="#c8845a"/>
+        <!-- middle finger -->
+        <path d="M26 20 C26 15 28 11 30 12 C32 13 31 17 30 20Z" fill="#c8845a"/>
+        <!-- knuckle crease -->
+        <path d="M21 27 Q25 25 28 27" stroke="#b07050" stroke-width="0.9" fill="none" stroke-linecap="round"/>
+        <!-- index nail -->
+        <path d="M24 11 Q25 10 26 11 Q26 13 25 13 Q24 13 24 11Z" fill="#e8b090" opacity="0.5"/>
+      </svg>
+    </h1>
     <p class="intro">Browse handpicked originals in two collections: Paintings and Sketches.</p>
   </div>
 
@@ -39,10 +64,7 @@
             <h3>{{ sketch.title }}</h3>
             <p class="category">{{ sketch.category }}</p>
             <p>{{ sketch.description }}</p>
-            <div class="meta">
-              <strong>{{ sketch.price | currency : 'INR' : 'symbol' : '1.0-0' }}</strong>
-            </div>
-            <button (click)="orderViaGmail(sketch)">Order on Gmail</button>
+            <button (click)="openEnquiry(sketch)">Enquire</button>
           </div>
         </article>
       </div>
@@ -50,29 +72,68 @@
       <div class="portrait-cta">
         <h3>Want to order a Self Portrait Sketch?</h3>
         <p>Share your photo and preferred size to start a custom portrait order.</p>
-        <a class="portrait-btn" target="_blank" rel="noopener noreferrer" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=praveenkaran19%40gmail.com&amp;su=Self%20Portrait%20Sketch%20Order&amp;body=Hi%20Praush%2C%0A%0AI%20want%20to%20order%20a%20self%20portrait%20sketch.%0AName%3A%0APhone%3A%0ASize%20Preference%3A%0AReference%20Photo%20Link%3A%0A%0AThanks.">Order Self Portrait</a>
+        <a class="portrait-btn" [href]="selfPortraitHref" target="_blank" rel="noopener noreferrer">Order Self Portrait</a>
       </div>
     </section>
 
     <section class="collection paintings-block" [class.mobile-hidden]="selectedCollection !== 'paintings'">
       <div class="section-head">
         <h2>Paintings</h2>
-        <span class="count">Coming Soon</span>
+        <span class="count">{{ paintingWorks.length }} works</span>
       </div>
 
-      <div class="coming-soon-banner">
-        <h3>Paintings Collection Coming Soon...</h3>
-        <p>Fresh canvas works are being curated. Please check back shortly for the next launch.</p>
+      <div class="grid">
+        <article class="card sketch-card" *ngFor="let painting of paintingWorks">
+          <img [src]="painting.imageUrl" [alt]="painting.title" (click)="openImagePreview(painting)">
+          <div class="content">
+            <h3>{{ painting.title }}</h3>
+            <p class="category">{{ painting.category }}</p>
+            <p>{{ painting.description }}</p>
+            <button (click)="openEnquiry(painting)">Enquire</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="portrait-cta">
+        <h3>Want a Custom Painting?</h3>
+        <p>Share your theme, size and medium preference to commission an original piece.</p>
+        <a class="portrait-btn" [href]="customPaintingHref" target="_blank" rel="noopener noreferrer">Order Custom Painting</a>
       </div>
     </section>
   </div>
 
   <div class="image-modal" *ngIf="selectedImage" (click)="closeImagePreview()">
     <div class="image-dialog" (click)="$event.stopPropagation()">
-      <button type="button" class="close-btn" (click)="closeImagePreview()">Close</button>
+      <button type="button" class="close-btn" (click)="closeImagePreview()">✕ Close</button>
       <img [src]="selectedImage.imageUrl" [alt]="selectedImage.title">
       <h3>{{ selectedImage.title }}</h3>
-      <p>Painting No: {{ selectedImage.id }}</p>
+      <p>{{ selectedImage.description }}</p>
+      <p>Painting No: {{ selectedImage.id }} &nbsp;·&nbsp; {{ selectedImage.category }}</p>
+    </div>
+  </div>
+
+  <!-- Enquiry modal -->
+  <div class="image-modal" *ngIf="enquiryItem" (click)="closeEnquiry()">
+    <div class="image-dialog enquiry-dialog" (click)="$event.stopPropagation()">
+      <button type="button" class="close-btn" (click)="closeEnquiry()">✕ Close</button>
+
+      <div class="enquiry-header">
+        <img [src]="enquiryItem.imageUrl" [alt]="enquiryItem.title" class="enquiry-thumb">
+        <div class="enquiry-meta">
+          <p class="enquiry-label">Sketch Enquiry</p>
+          <h3>{{ enquiryItem.title }}</h3>
+          <p class="category">{{ enquiryItem.category }} &nbsp;·&nbsp; No. {{ enquiryItem.id }}</p>
+        </div>
+      </div>
+
+      <p class="enquiry-note">
+        Tap <strong>Send Enquiry</strong> to open your mail app with a pre-filled message for this sketch.
+        Add your name, phone, and address before sending.
+      </p>
+
+      <a class="enquiry-send-btn" [href]="buildEnquiryHref(enquiryItem)" target="_blank" rel="noopener noreferrer">
+        ✉ Send Enquiry
+      </a>
     </div>
   </div>
 </section>
