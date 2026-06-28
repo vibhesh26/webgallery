@@ -178,6 +178,56 @@ const LOCAL_PAINTINGS: Painting[] = [
     quantityAvailable: 1
   },
   {
+    id: 112,
+    title: 'Golden Hour Reflection',
+    description: 'A warm portrait study bathed in late-evening light, with expressive brushwork and soft tonal transitions.',
+    imageUrl: '/img/painting-12.jpeg',
+    category: 'Portrait',
+    price: 12000,
+    status: 'AVAILABLE',
+    quantityAvailable: 1
+  },
+  {
+    id: 113,
+    title: 'Vermilion Grace',
+    description: 'A vibrant portrait composition highlighted by rich reds and confident line accents.',
+    imageUrl: '/img/painting-13.jpeg',
+    category: 'Portrait',
+    price: 12000,
+    status: 'AVAILABLE',
+    quantityAvailable: 1
+  },
+  {
+    id: 114,
+    title: 'Quiet Radiance',
+    description: 'A serene portrait with balanced shadows and luminous skin tones, designed for an elegant wall presence.',
+    imageUrl: '/img/painting-14.jpeg',
+    category: 'Portrait',
+    price: 12000,
+    status: 'AVAILABLE',
+    quantityAvailable: 1
+  },
+  {
+    id: 115,
+    title: 'Festive Portrait',
+    description: 'A celebratory portrait featuring bold color contrasts and finely detailed facial expression.',
+    imageUrl: '/img/painting-15.jpeg',
+    category: 'Portrait',
+    price: 12000,
+    status: 'AVAILABLE',
+    quantityAvailable: 1
+  },
+  {
+    id: 116,
+    title: 'Soulful Eyes',
+    description: 'An emotive portrait centered on gaze and mood, blending soft gradients with crisp edge detailing.',
+    imageUrl: '/img/painting-16.jpeg',
+    category: 'Portrait',
+    price: 12000,
+    status: 'AVAILABLE',
+    quantityAvailable: 1
+  },
+  {
     id: 201,
     title: 'Sketches of Time',
     description: 'Graphite and charcoal portrait study from the Praush sketch collection.',
@@ -204,6 +254,16 @@ const LOCAL_PAINTINGS: Painting[] = [
     imageUrl: '/img/sketch-3.jpg',
     category: 'Sketch',
     price: 4200,
+    status: 'AVAILABLE',
+    quantityAvailable: 1
+  },
+  {
+    id: 204,
+    title: 'Soft Gaze Sketch',
+    description: 'Graphite sketch portrait with gentle shading and a calm expression.',
+    imageUrl: '/img/sketch-4.jpeg',
+    category: 'Sketch',
+    price: 4600,
     status: 'AVAILABLE',
     quantityAvailable: 1
   },
@@ -294,6 +354,26 @@ const LOCAL_PAINTINGS: Painting[] = [
     imageUrl: '/img/sketch-13.jpeg',
     category: 'Sketch',
     price: 8500,
+    status: 'AVAILABLE',
+    quantityAvailable: 1
+  },
+  {
+    id: 227,
+    title: 'Twilight Study',
+    description: 'A textured graphite sketch with layered shading and subtle contrast for a dramatic portrait finish.',
+    imageUrl: '/img/sketch-27.jpeg',
+    category: 'Sketch',
+    price: 5000,
+    status: 'AVAILABLE',
+    quantityAvailable: 1
+  },
+  {
+    id: 228,
+    title: 'Calm Contour',
+    description: 'A clean-line pencil sketch capturing gentle expression and depth through controlled tonal blending.',
+    imageUrl: '/img/sketch-28.jpeg',
+    category: 'Sketch',
+    price: 5000,
     status: 'AVAILABLE',
     quantityAvailable: 1
   }
